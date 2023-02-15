@@ -192,12 +192,7 @@ let = transferData = async() => {
     }
 }
 
-transferData()
-console.log("run : "+username);
-
-
-
-//intercomTest();
+//transferData()
 
 
 /*
