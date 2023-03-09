@@ -107,31 +107,31 @@ let getVendorBillingData = async (vendorId,page) => {
 }
 
 let finalRun = async () => {
-    let vandorIdData = await fetchingVendorsData();
-    for(vandor of vandorIdData) {
-        let id = vandor?.Vendor_ID;
+    let vendorIdData = await fetchingVendorsData();
+    for(vendor of vendorIdData) {
+        let id = vendor?.Vendor_ID;
         let check = true;
         let page = 1;
-        console.log("* Vandor Id : "+id);
+        console.log("* Vendor Id : "+id);
         while(check){
-            let vandorBillData = await getVendorBillingData(id,page);
-            if(vandorBillData?.code == 57) {
+            let vendorBillData = await getVendorBillingData(id,page);
+            if(vendorBillData?.code == 57) {
                 console.log("  -> renewToken token got called");
                 await renewToken();
-                vandorBillData = await getVendorBillingData(id,page);
+                vendorBillData = await getVendorBillingData(id,page);
             }
-            if(vandorBillData == null) {
-                console.log("   * No vandor found with given id : "+id+" vandor name : "+vandor?.Vendor_Name);
+            if(vendorBillData == null) {
+                console.log("   * No vendor found with given id : "+id+" vendor name : "+vendor?.Vendor_Name);
                 break;
             }
             console.log("   from page number: "+page);
-            for(vandorBill of vandorBillData?.bills || []) {
+            for(vendorBill of vendorBillData?.bills || []) {
                 console.log("        adding data in row"); 
-                let result = await wirtingVendorData(createRowObject(vandorBill));
+                let result = await wirtingVendorData(createRowObject(vendorBill));
                 console.log("           "+result?.data?.message);
             }
             page++;
-            check = vandorBillData?.page_context?.has_more_page; 
+            check = vendorBillData?.page_context?.has_more_page; 
         }
 
     }
